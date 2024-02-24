@@ -5,8 +5,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="/hello-world/"/>
-    <url>/hello-world/</url>
+    <link href="/hello/"/>
+    <url>/hello/</url>
     
     <content type="html"><![CDATA[<h1 id="Hello-hexo"><a href="#Hello-hexo" class="headerlink" title="Hello-hexo"></a>Hello-hexo</h1><p>这是我的第一篇文章</p>]]></content>
     
