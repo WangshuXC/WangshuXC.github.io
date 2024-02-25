@@ -24,7 +24,7 @@
 <meta property="og:description" content="第一次将 hexo 博客部署到云服务器上，记录一下配置心得 特意撰写了一个从 0 开始配置的教程，即使是新手也能放心食用！ 本地配置 hexo安装 Nodejs Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境，是一个让 JavaScript 运行在服务端的开发平台。  从Nodejs 官方地址下载所需要的版本并进行环境变量的配置。建议下载LTS（即 Long">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-25T02:23:36.000Z">
-<meta property="article:modified_time" content="2024-02-25T03:06:14.284Z">
+<meta property="article:modified_time" content="2024-02-25T06:31:27.834Z">
 <meta property="article:author" content="WangshuXC">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          485 字
+          1.2k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          5 分钟
+          11 分钟
         
       </span>
     
@@ -339,6 +339,53 @@
 
 <p>至此本地 hexo 配置已经完成，可以在本地进行查看</p>
 <p>使用<code>hexo g</code>生成静态页面，<code>hexo s</code>启动本地服务器，随后进入<code>localhost:4000</code>查看配置好的 hexo 博客。</p>
+<h2 id="部署到Github-io上"><a href="#部署到Github-io上" class="headerlink" title="部署到Github.io上"></a>部署到Github.io上</h2><h3 id="初始化仓库"><a href="#初始化仓库" class="headerlink" title="初始化仓库"></a>初始化仓库</h3><p>新建一个名为<code>&#123;github_name&#125;.github.io</code>，例如我的Github名字是WangshuXC，就建立一个叫<code>WanghsuXC.github.io</code>的仓库</p>
+<h3 id="ssh密钥"><a href="#ssh密钥" class="headerlink" title="ssh密钥"></a>ssh密钥</h3><p>打开git bash终端设置 user.name 和 user.email</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --global user.name &quot;你的GitHub用户名&quot;<br>git config --global user.email &quot;你的GitHub注册邮箱&quot;<br></code></pre></td></tr></table></figure>
+
+<p>生成ssh密匙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot;<br></code></pre></td></tr></table></figure>
+
+<p>随后将公钥添加到github上，这样推送的时候就不用多次输入密码</p>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><p>修改配置文件 <strong>blog&#x2F;_config.yml</strong>，修改deploy项的内容，如下所示：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">&quot;git&quot;</span><br>  <span class="hljs-attr">repo:</span><br>    <span class="hljs-attr">github:</span><br>      <span class="hljs-attr">url:</span> <span class="hljs-string">git@github.com:WangshuXC/WangshuXC.github.io.git</span><br>      <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br></code></pre></td></tr></table></figure>
+
+<p>注意将<code>WangshuXC</code>替换为你的github用户名</p>
+<p>输入下面的命令将hexo博客推送到到github仓库中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo cl  #清理之前生成的文件<br>hexo g   #生成静态页面<br>hexo d   #部署<br></code></pre></td></tr></table></figure>
+
+
+
+<p>随后等待Github的action运行完毕就能在<code>[yourname].github.io</code>查看到部署好的博库了</p>
+<h2 id="部署到云服务器"><a href="#部署到云服务器" class="headerlink" title="部署到云服务器"></a>部署到云服务器</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>首先进入服务器的管理界面，找到<em><strong>安全</strong></em>选项中的<em><strong>防火墙</strong></em>（可能有一些服务商写的类似的<em><strong>安全组</strong></em>），确认应用类型 <code>HTTP</code> 协议 <code>TCP</code> 端口 <code>80</code> 是否设置打开</p>
+<p>确认防火墙的配置没问题后可以安装<strong>宝塔面板</strong>，它会帮我们安装Nginx和NodeJs，能够令我们更轻松地配置博客</p>
+<h3 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h3><p>以我的CentOs为例</p>
+<p>运行<code>yum install git</code>安装git，因为我的服务器都是root用户使用的，就不进行配置git用户的环节</p>
+<h3 id="配置仓库和网站文件夹"><a href="#配置仓库和网站文件夹" class="headerlink" title="配置仓库和网站文件夹"></a>配置仓库和网站文件夹</h3><p>在一个你喜欢的位置新建一个空的git仓库，例如我就选择建立到&#x2F;var&#x2F;repo&#x2F;blog.git中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /var/repo<br>git init --bare hexoblog.git<br></code></pre></td></tr></table></figure>
+
+
+
+<p>随后建立一个文件夹用于存放要部署的博客，例如我就选择建立到&#x2F;www&#x2F;wwwroot&#x2F;hexoblog</p>
+<p>在 <code>/var/repo/blog.git</code> 下，有一个自动生成的 <code>hooks</code> 文件夹，我们创建一个新的 <code>git</code> 钩子 <code>post-receive</code>，用于自动部署。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim blog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+
+<p>按 <code>i</code> 键进入文件的编辑模式，在该文件中添加两行代码（将下边的代码粘贴进去)，指定 Git 的工作树（源代码）和 Git 目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash </span><br> git --work-tree=/www/wwwroot/hexoblog --git-dir=/var/repo/hexoblog.git checkout -f<br></code></pre></td></tr></table></figure>
+
+<p>编辑结束之后，按 <code>esc</code> 键，然后输入 <code>:wq</code> 并敲回车键退出vim编辑器并保存文件。</p>
+<p>添加完毕后修改权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +x ~/var/repo/hexoblog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="推送-1"><a href="#推送-1" class="headerlink" title="推送"></a>推送</h3><p>修改本机的配置文件 <strong>blog&#x2F;_config.yml</strong>，修改deploy项的内容，如下所示：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">&quot;git&quot;</span><br>  <span class="hljs-attr">repo:</span><br>    <span class="hljs-attr">github:</span><br>      <span class="hljs-attr">url:</span> <span class="hljs-string">git@github.com:WangshuXC/WangshuXC.github.io.git</span><br>      <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>    <span class="hljs-comment"># 添加如下代码</span><br>    <span class="hljs-attr">tencent:</span> <span class="hljs-comment"># 随便命名，因为我是用腾讯云就使用‘tencent’这个命名了</span><br>      <span class="hljs-attr">url:</span> <span class="hljs-string">root@&#123;你的云服务器ip&#125;:/var/repo/hexoblog.git</span> <br>      <span class="hljs-attr">branch:</span> <span class="hljs-string">master</span><br></code></pre></td></tr></table></figure>
+
+<p>至此就配置完成了，只需要在本机运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo g -d<br></code></pre></td></tr></table></figure>
+
+<p>就能同时推送到github和云服务器中了</p>
 
                 
               </div>
