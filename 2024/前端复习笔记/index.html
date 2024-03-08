@@ -24,7 +24,7 @@
 <meta property="og:description" content="HTML与CSSHTML标签类型 块级元素 block div ul ol li p from table tr h1-h6 可设置宽高 独占一行 margin和padding都生效   内联元素 inline span a b i em strong 不可设置宽高 不会独占一行 margin和padding的top和bottom都不生效   内联块级元素 input select textare">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-08T13:12:58.000Z">
-<meta property="article:modified_time" content="2024-03-08T13:24:08.628Z">
+<meta property="article:modified_time" content="2024-03-08T13:57:35.396Z">
 <meta property="article:author" content="WangshuXC">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.6k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          15 分钟
+          22 分钟
         
       </span>
     
@@ -525,8 +525,7 @@
 </li>
 </ul>
 </li>
-</ul>
-<h3 id="css可继承的属性"><a href="#css可继承的属性" class="headerlink" title="css可继承的属性"></a>css可继承的属性</h3><ul>
+<li><h3 id="css可继承的属性"><a href="#css可继承的属性" class="headerlink" title="css可继承的属性"></a>css可继承的属性</h3><ul>
 <li>字体全部属性<br>font、font-style、font-family、font-variant、font-weight、font-size、font-stretch、font-size-adjust</li>
 <li>文本全部属性<br>color、 direction、 letter-spacing、 line-height、 text-align、 text-indent、 text-decoration、 text-shadow、 text-transform、word-spacing、unicode-bidi、white-space.</li>
 <li>元素可见性<br>visibility。</li>
@@ -539,10 +538,101 @@
 <li>描述了一些基本的元数据</li>
 <li>提供了元数据（虽然不显示在页面上，但是会被浏览器解析）</li>
 <li>用于网页的描述、关键词、文件的最后修改时间、作者和其他元数据</li>
-<li>元数据可以用于浏览器（如何显示内容或者加载页面）、搜索引擎（关键字）或者其他Web服务</li>
+<li>元数据可以用于浏览器（如何显示内容或者加载页面）、搜索引擎（关键字）或者其他Web服务(如每多少秒刷新页面)</li>
 </ul>
 </li>
-<li>title</li>
+<li>title<ul>
+<li>当前页面的标题</li>
+</ul>
+</li>
+<li>link<ul>
+<li>定义了文档与外部资源的关系，通常用来引用外部的css文件</li>
+</ul>
+</li>
+<li>base<ul>
+<li>描述了基本的链接地址&#x2F;链接目标，该标签作为HTML文档中所有链接标签的默认链接</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>script、style</li>
+</ul>
+</li>
+</ul>
+<h3 id="CSS长度单位"><a href="#CSS长度单位" class="headerlink" title="CSS长度单位"></a>CSS长度单位</h3><ul>
+<li>单位及分类<ul>
+<li>绝对长度：px、in、cm、mm、pt、pc</li>
+<li>相对长度：em、rem、ex、vh、vw、vmin、vmax、%、fr</li>
+</ul>
+</li>
+<li>绝对长度<ul>
+<li>绝对长度表示一个真实的物理尺寸，大小固定，不会因其他元素的尺寸变化而变化</li>
+<li>px：原来是物理像素点。目前像素是相对于屏幕分辨率的逻辑像素</li>
+<li>in：英寸，1in &#x3D;&#x3D; 2.54cm &#x3D;&#x3D; 96px</li>
+<li>cm：厘米 ，1cm &#x3D;&#x3D; 37.8px</li>
+</ul>
+</li>
+<li>相对长度<ul>
+<li>em：相对于当前对象内文本的字体尺寸，如果当前行内的字体尺寸没被设置，就相对于浏览器的默认字体尺寸（在没有CSS规则的前提下，1em &#x3D;&#x3D; 16px）</li>
+<li>rem：与em类似，但是总是相对于根元素（html）的字体大小</li>
+<li>ex：所用字体中小写x的高度，通常是字体高度的一半。（font-family改变时ex可能会改变）</li>
+<li>ch：类似于ex，但是是基于字符0的高度</li>
+<li>vh：可视高度（viewport height）</li>
+<li>vw：可视宽度（viewport width）</li>
+<li>vmin：vw和vh中较小的值</li>
+<li>vmax：同vmin</li>
+<li>%：以父元素的长度为1的百分比的值</li>
+<li>fr：grid布局中利用的一个长度单位</li>
+</ul>
+</li>
+</ul>
+<h3 id="响应式设计"><a href="#响应式设计" class="headerlink" title="响应式设计"></a>响应式设计</h3><blockquote>
+<p>页面的设计与开发应当根据用户的行为以及设备环境（系统平台、屏幕尺寸、屏幕定向等）进行相应的响应和调整</p>
+</blockquote>
+<ul>
+<li><p>特点</p>
+<ul>
+<li>同时匹配PC+平板+手机等不同屏幕尺寸或比例的设备</li>
+<li>网站的布局会根据视口的尺寸或比例来调整模块的大小和位置</li>
+</ul>
+</li>
+<li><p>实现方式</p>
+<ul>
+<li>vw&#x2F;vh、百分比、rem、媒体查询</li>
+</ul>
+</li>
+<li><p>媒体查询</p>
+<blockquote>
+<p>CSS 媒体查询是一种应用 CSS 的方法，仅在浏览器和设备的环境与你指定的规则相匹配的时候，CSS 才会真的被应用。<br>媒体查询是响应式 Web 设计的关键部分，因为它允许你按照视口的尺寸创建不同的布局。不过它也可以用来探测和你的站点运行的环境相关联的其它条件，比如用户是在使用触摸屏还是鼠标。</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> media-type <span class="hljs-keyword">and</span> (media-feature-tule)&#123;<br>    css rules<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>媒体特征规则（media-feature-tule）</p>
+<ul>
+<li><p>宽和高</p>
+<p>当视口宽度&#x2F;高度大于或者小于某个大小或者是恰好处于某个大小的时候应用CSS</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>:<span class="hljs-number">400px</span>)&#123;<br>    <span class="hljs-selector-tag">body</span>&#123;<br>        <span class="hljs-attribute">background-color</span>:white;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>朝向</p>
+<p>orientation，可以设置竖放portait和横放landscape</p>
+</li>
+<li><p>逻辑”与“</p>
+<p>为了混合媒体特征，可以用逻辑与的方式在上面用and关键词来混合媒体特征</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>:<span class="hljs-number">400px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">orientatino</span>:landscape)&#123;<br>    <span class="hljs-selector-tag">body</span>&#123;<br>        <span class="hljs-attribute">background-color</span>:black;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑”非“</p>
+<p>可以用not操作符让整个媒体查询失效，但是也直接反转了整个媒体查询的意义</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> <span class="hljs-keyword">not</span> all <span class="hljs-keyword">and</span> (<span class="hljs-attribute">orientatino</span>:landscape)&#123;<br>    <span class="hljs-selector-tag">body</span>&#123;<br>        <span class="hljs-attribute">background-color</span>:blue;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2>
                 
