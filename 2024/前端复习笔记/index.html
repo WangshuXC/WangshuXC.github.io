@@ -24,7 +24,7 @@
 <meta property="og:description" content="HTML与CSSHTML标签类型 块级元素 block div ul ol li p from table tr h1-h6 可设置宽高 独占一行 margin和padding都生效   内联元素 inline span a b i em strong 不可设置宽高 不会独占一行 margin和padding的top和bottom都不生效   内联块级元素 input select textare">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-08T13:12:58.000Z">
-<meta property="article:modified_time" content="2024-03-08T16:05:13.008Z">
+<meta property="article:modified_time" content="2024-03-09T12:34:43.285Z">
 <meta property="article:author" content="WangshuXC">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k 字
+          7.9k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          32 分钟
+          66 分钟
         
       </span>
     
@@ -782,7 +782,323 @@
 </ul>
 </li>
 </ul>
-<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2>
+<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2><h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p> 我们多次提到JS中万物皆对象(包括 null 也是对象)，每个对象都有其原型(这时候 null 除外)。</p>
+<p> 我们用 console.log()打印一个对象时，一般情况下会在控制台上看到该对象的 [[prototype]]这个属性，这就是该对象的原型。	</p>
+</blockquote>
+</li>
+<li><p>作用</p>
+<blockquote>
+<p>Js设计原型的初衷就是为了实现<strong>继承</strong>。也就是说原型对象上的属性和方法都能被实例对象<strong>共享</strong>。</p>
+</blockquote>
+<p>例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Function</span> <span class="hljs-title class_">Obj</span>(name)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>&#125;<br><span class="hljs-title class_">Obj</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;学生&#x27;</span>; <span class="hljs-comment">//原型属性 type</span><br><span class="hljs-title class_">Obj</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-comment">//原型方法 say</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>)<br>&#125;；<br><span class="hljs-keyword">const</span> obj1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Obj</span>(<span class="hljs-string">&#x27;张三&#x27;</span>)；<br><span class="hljs-keyword">const</span> obj1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Obj</span>(<span class="hljs-string">&#x27;李四&#x27;</span>)；<br><span class="hljs-comment">//两个实例对象(obj1, obj2)都继承了原型对象Obj上的原型属性type和原型方法say()</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>在原型的例子中将obj1打印到控制台：<code>console.log(obj1);</code>就可以看到有实例属性[[prototype]]，展开后能看到里面有原型属性、方法、构造函数constructor；除此之外还有一个[[prototype]]，再展开会发现里面还有很多方法和属性，其中有我们熟悉的valueOf()，toString()等</p>
+<ul>
+<li><p>概念</p>
+<blockquote>
+<p>原型本就是一个对象（所以我们一般称之为原型对象），所以他也有原型，这样一级一级的原型嵌套，直到最顶端（原型的尽头）就形成了一条链，我们称之为<strong>原型链</strong></p>
+</blockquote>
+</li>
+<li><p>原型链的尽头是什么</p>
+<p>是null</p>
+</li>
+<li><p>获取原型的方法</p>
+<ul>
+<li>__proto__浏览器提供的非标准方法 <code>console.log(obj1.__proto__)</code></li>
+</ul>
+</li>
+<li><p>Object.getPrototypeOf（对象）ES5提供的标准方法 <code>console.log(Object.getPrototypeOf(obj1))</code></p>
+</li>
+</ul>
+<h3 id="作用域与作用域链"><a href="#作用域与作用域链" class="headerlink" title="作用域与作用域链"></a>作用域与作用域链</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p>作用域，即变量（变量作用域又称上下文）和函数生效（能被访问）的区域和集合。作用域决定了代码区块中变量和其他资源的可见性。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//1</span><br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//报错</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>分类</p>
+<p>作用域分为：全局作用域、函数（局部）作用域、块级作用域</p>
+<ul>
+<li><p>全局作用域</p>
+<p>任何不在函数中或是大括号中声明的变量，都是在全局作用域下，全局作用域下生命的变量可以在程序的任意位置访问</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&#x27;abc&#x27;</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str);<span class="hljs-comment">//abc</span><br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str);<span class="hljs-comment">//abc</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>函数作用域</p>
+<p>函数作用域也叫局部作用域，如果一个变量是声明在函数内部的，他就在一个函数作用域下面。这些变量只能在函数内部访问，不能在函数以为去访问。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> str = <span class="hljs-string">&#x27;abc&#x27;</span>;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str);<span class="hljs-comment">//abc</span><br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str);<span class="hljs-comment">//报错</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>块级作用域</p>
+<p>ES6中引入了<code>let</code>和<code>const</code>关键字，和<code>var</code>关键字不同，在大括号中使用<code>let</code>和<code>const</code>声明的变量存在于块级作用域中，在大括号外不能访问这些变量。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i &lt; <span class="hljs-number">3</span>;i++)&#123;<br>    <span class="hljs-keyword">let</span> a = i + <span class="hljs-number">1</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//报错</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i);<span class="hljs-comment">//报错</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>作用域链</p>
+<p>当在 Javascript 中使用一个变量的时候，首先 Javascript 引擎会尝试在当前作用域下去寻找该变量，如果没找到，再到它的上层作用域寻找，以此类推直到找到该变量或是已经到了全局作用域。如果在全局作用域里仍然找不到该变量，它就会在全局范围内隐式声明该变量(非严格模式下)或是直接报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&#x27;abc&#x27;</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-comment">//如果这里声明了一个值为def的str，就不会去找值为abc的str</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="This"><a href="#This" class="headerlink" title="This"></a>This</h3><ul>
+<li><p>为什么要用this</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`我是	<span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.name&#125;</span>`</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> objl = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;obj1&#x27;</span>,<br>    <span class="hljs-attr">foo</span>: foo<br>&#125;<br><span class="hljs-keyword">var</span> obj2 =&#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;obj2&#x27;</span><br>    foo : foo<br>&#125;<br>obj1.<span class="hljs-title function_">foo</span>();<span class="hljs-comment">// 我是 obj1</span><br>obj2.<span class="hljs-title function_">foo</span>();<span class="hljs-comment">// 我是 obj2</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的代码中，foo()只定义了一次，却可以被不同的对象引用，实现了代码共享</p>
+</li>
+<li><p>this的指向</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>);<br>&#125;<br><br><span class="hljs-title function_">fn</span>();<span class="hljs-comment">//1 window</span><br><span class="hljs-comment">//如果是严格模式，this会指向undefined</span><br></code></pre></td></tr></table></figure>
+
+<p>this的最终指向要看它绑定的结果</p>
+</li>
+<li><p>默认绑定（隐式绑定）</p>
+<p>从上面两个例子可以看到，this指向的是函数调用者。未明确指定绑定对象时，this会默认（或者说JS会隐式地将this）绑定到函数的调用者</p>
+</li>
+<li><p>显式绑定</p>
+<p>可以通过call(), bind(), apply()方法，显式地将this绑定到某个对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> obj = &#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;obj&#x27;</span>&#125;;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>)<br>&#125;<br>fn.<span class="hljs-title function_">call</span>(obj) <span class="hljs-comment">//&#123;name:&#x27;obj&#x27;&#125; call()方法会立即执行</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>箭头函数没有this</p>
+<p>箭头函数不能被实例化，也就不会有this（箭头函数的特性）</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">foo</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`我是<span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.name&#125;</span>);</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">var obj1 = &#123;</span><br><span class="hljs-string">    name:&#x27;obj1&#x27;,</span><br><span class="hljs-string">    foo: foo</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">var obj2 = &#123;</span><br><span class="hljs-string">    name:&#x27;obj2&#x27;,</span><br><span class="hljs-string">    foo:foo</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">obj1.foo();// 我是</span><br><span class="hljs-string">obj2.foo();// 我是</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="New"><a href="#New" class="headerlink" title="New"></a>New</h3><ul>
+<li>new的流程<ol>
+<li>创建一个新的空对象</li>
+<li>将新对象的原型指向构造函数的原型</li>
+<li>将构造函数的作用域赋给新对象（因此在构造函数中可以使用this关键字来引用新对象）</li>
+<li>如果构造函数没有明确的返回一个对象，就返回新创建的对象；否则返回构造函数中返回的对象</li>
+</ol>
+</li>
+</ul>
+<h3 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p>BOM是浏览器对象模型(Brower Object Model)缩写。主要就是用来控制浏览器的，比如前进、后退、跳转等；以及获取客户端的一些信息，比如浏览器的版本、用户的操作系统、屏幕的分辨率等</p>
+</blockquote>
+</li>
+<li><p>window</p>
+<blockquote>
+<p>BOM的核心就是 window 对象。而 window 对象有很多方法与属性。其主要属性有五个：navigator、location、document、history、screen</p>
+</blockquote>
+</li>
+<li><p>window方法（常用）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 创建新窗口</span><br><span class="hljs-keyword">let</span> win= <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;width=200,height=200&quot;</span>);<br><br><span class="hljs-comment">// 调整新窗口大小</span><br>win.<span class="hljs-title function_">resizeTo</span>(<span class="hljs-number">300</span>，<span class="hljs-number">300</span>);<br><br><span class="hljs-comment">// 弹出提示</span><br><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;提示&#x27;</span>)<br><br><span class="hljs-comment">// 弹出对话番</span><br><span class="hljs-keyword">let</span> ok = <span class="hljs-title function_">confirm</span>(<span class="hljs-string">&quot;你好!&quot;</span>);<br><br><span class="hljs-comment">// 计时与取消计时</span><br><span class="hljs-keyword">let</span> t = <span class="hljs-built_in">setInterval</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>)&#125;，<span class="hljs-number">1000</span>);<br><span class="hljs-built_in">clearInterval</span>(t)<br><br><span class="hljs-comment">// 延迟与取消延迟</span><br><span class="hljs-keyword">let</span> t = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>)&#125;，<span class="hljs-number">100</span>)<br><span class="hljs-built_in">clearTimeout</span>(t)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>navigator</p>
+<p>navigator对象包含有关浏览器的信息，其对象的方法和属性也有很多</p>
+<ul>
+<li>userAgent返回浏览器发给服务器的用户代理标头<code>console.log(window.navigator.userAgent)</code></li>
+<li>appVersion返回浏览器版本</li>
+</ul>
+</li>
+<li><p>location</p>
+<p>Location对象包含有关当前URl的信息</p>
+<ul>
+<li><p>hash 设置或返回URl的锚部分(#)</p>
+</li>
+<li><p>host 设置或返回URL的主机名和端口号</p>
+</li>
+<li><p>hostname 设置或返回URL的主机名</p>
+</li>
+<li><p>href 设置或返回整个URL</p>
+</li>
+<li><p>port 设置或返回URL的路径名</p>
+</li>
+<li><p>assign() 加载新文档</p>
+</li>
+<li><p>reload() 重新加载当前文档</p>
+</li>
+<li><p>replace() 用新文档替换当前文档</p>
+</li>
+</ul>
+</li>
+<li><p>history</p>
+<p>History对象包含用户（在浏览器窗口中）访问过的URL</p>
+<ul>
+<li>back() 加载历史列表的上一个URl</li>
+<li>forward() 加载历史列表的下一个URL</li>
+<li>go() 从历史列表中加载特定的URl</li>
+<li>length() 返回历史列表的URL数量</li>
+</ul>
+</li>
+<li><p>screen</p>
+<p>Screen对象包含有关访问者的屏幕信息</p>
+<ul>
+<li>availHeight 返回屏幕高度（不包括windows任务栏）</li>
+<li>availWidth 返回屏幕宽度（不包括windows任务栏）</li>
+<li>height 返回屏幕的总高度</li>
+<li>width返回屏幕的总宽度</li>
+</ul>
+</li>
+</ul>
+<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p>DOM 全称是 Document Object Model，也就是文档对象模型。提供操作页面元素的方法和属性，是HTML和XML的API，DOM把整个页面规划成由节点层级构成的文档。<br>DOM树是Web页面的模型，当浏览器加载一个Web页面时，它会创建这个页面的模型，称为DOM树。</p>
+</blockquote>
+</li>
+<li><p>分类</p>
+<p>常见的DOM节点主要有三种。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs hmtl">&lt;body&gt; &lt; !--元素节点-- &gt;<br>	&lt;p class=&#x27;text&#x27; id=&#x27;text_id&#x27;&gt; &lt; !--class、id为属性节点-- &gt;<br>	content &lt; !--文本节点-- &gt;<br>	&lt;/p&gt;<br>&lt;/body&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>元素节点：如html、div、a、body等都是元素节点，即标签</li>
+<li>文本节点：向用户展示的内容，如<code>&lt;title&gt;...&lt;/titile&gt;</code>中的”文档标题“</li>
+<li>属性节点：元素的属性，如<code>&lt;div&gt;</code>中的class属性，<code>&lt;a&gt;</code>中的href属性</li>
+</ul>
+</li>
+<li><p>操作</p>
+<p>DOM操作大致分为五类：创建节点，查询节点，更新节点，添加节点，删除节点</p>
+<ul>
+<li><p>创建节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> divEl = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>)<br><span class="hljs-comment">// createElement()创建节点，接收一个参数(标签名称)</span><br><br><span class="hljs-keyword">const</span> textEl= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createTextNode</span>(<span class="hljs-string">&quot;content&quot;</span>);<br><span class="hljs-comment">// createTextNode()创建文本节点，接收一个参数(文本内容)</span><br><br><span class="hljs-keyword">const</span> fragment= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createDocumentFragment</span>();<br><span class="hljs-comment">// createDocumentFragment()创建文档碎片()</span><br><span class="hljs-comment">// fragment 文档碎片与 document ”样，可以通过 document 的 api 来处理 fragment</span><br><br><span class="hljs-keyword">const</span> arrt=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createAttribute</span>(<span class="hljs-string">&#x27;class)；</span><br><span class="hljs-string">// createAttribute 创建属性节点，接收一个参数(属性名称)</span><br><span class="hljs-string">attr.value = &quot;abc；</span><br><span class="hljs-string">//.value 设置属性值</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查询（获取）节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> dom= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;div&#x27;</span>)<br><span class="hljs-comment">// querySelector()接收一个参数，参数参照CSS选择器，可以是标签、id(#id)、class(.class)、属性([name=&quot;name&quot;])及组合选择器。返回一个节点(Node)</span><br><br><span class="hljs-keyword">const</span> domList = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;p&quot;</span>)<br><span class="hljs-comment">// querySelectorAll() 接收一个参数，参数参照CSS选择器。返回一个节点数组(NodeList)</span><br><br><span class="hljs-keyword">const</span> dom= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;id&#x27;</span>); <span class="hljs-comment">// 通过ID获取，返回一个节点</span><br><span class="hljs-keyword">const</span> dom = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByClassName</span>(<span class="hljs-string">&#x27;class&#x27;</span>);<span class="hljs-comment">// 通过class获取，返回一个节点数组</span><br><span class="hljs-keyword">const</span> dom=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;span&#x27;</span>);<span class="hljs-comment">// 通过标签名获取，返回一个节点数组</span><br><span class="hljs-keyword">const</span> dom = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByName</span>(<span class="hljs-string">&#x27;name&#x27;</span>);<span class="hljs-comment">// 通过name获取，返回一个节点数组</span><br><span class="hljs-keyword">const</span> html = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>;<span class="hljs-comment">//获取html</span><br><span class="hljs-keyword">const</span> body = <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>;<span class="hljs-comment">// 获取body</span><br><span class="hljs-keyword">const</span> all = <span class="hljs-variable language_">document</span>.<span class="hljs-property">all</span>;<span class="hljs-comment">// 以数组类型，返回全部节点</span><br></code></pre></td></tr></table></figure>
+
+<p>除了document获取之外，还可以通过每个dom的属性再次获取dom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> pDom = dom.<span class="hljs-property">parentNode</span>;<span class="hljs-comment">// 当前 dom 的父节点</span><br><span class="hljs-keyword">const</span> children = dom.<span class="hljs-property">childNodes</span>;<span class="hljs-comment">// 当前 dom 的所有子节点</span><br><span class="hljs-keyword">const</span> fChild = dom.<span class="hljs-property">firstChild</span>;<span class="hljs-comment">// 当前 dom 的第一个子节点</span><br><span class="hljs-keyword">const</span> lChild = dom.<span class="hljs-property">lastChild</span>;<span class="hljs-comment">// 当前 dom 的最后一个子节点</span><br><span class="hljs-keyword">const</span> next= dom.<span class="hljs-property">nextSibling</span>;<span class="hljs-comment">// 当前dom 的下一个邻节点</span><br><span class="hljs-keyword">const</span> previous = dom.<span class="hljs-property">previousSibling</span>;<span class="hljs-comment">// 当前 dom 的上一下邻节点</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>更新节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> dom= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;p&#x27;</span>);<span class="hljs-comment">// 通过 id 取得一个 dom 节点</span><br><br>dom.<span class="hljs-property">innerHTML</span> =<span class="hljs-string">&quot;&lt;span&gt;你好&lt;/span&gt;&quot;</span>;<span class="hljs-comment">//修改 dom 下的 HTML</span><br>dom.<span class="hljs-property">innerText</span>=<span class="hljs-string">&quot;你好&quot;</span>;<span class="hljs-comment">// 修改 dom 下的纯文本内容</span><br>dom.<span class="hljs-property">style</span>.<span class="hljs-property">color</span> =<span class="hljs-string">&#x27;#ff0000&#x27;</span>;<span class="hljs-comment">// 修改 dom 的样式</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>添加节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> dom = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;p&#x27;</span>);<span class="hljs-comment">// 通过 id 取得一个 dom 节点</span><br><br>dom.<span class="hljs-property">innerHTML</span> =<span class="hljs-string">&quot;&lt;span&gt;你好&lt;/span&gt;&quot;</span>;<span class="hljs-comment">//修改 dom 下的 HTML</span><br>dom.<span class="hljs-property">innerText</span>=<span class="hljs-string">&quot;你好&quot;</span>;<span class="hljs-comment">//修改 dom 下的纯文本内容</span><br><br><span class="hljs-keyword">const</span> dom2 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;p2&#x27;</span>);<br>dom.<span class="hljs-title function_">appendChild</span>(dom2);<br><span class="hljs-keyword">const</span> dom3= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>);<br>dom3.<span class="hljs-property">innerHTML</span> =<span class="hljs-string">&quot;&lt;span&gt;你好&lt;/span&gt;&quot;</span>;<br>dom.<span class="hljs-title function_">appendchild</span>(dom3)<span class="hljs-comment">// appendChild(节点)向 dom 中添加一个子节点</span><br><br><span class="hljs-keyword">const</span> dom4 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>);<br>dom3.<span class="hljs-property">innerHTML</span> =<span class="hljs-string">&quot;&lt;span&gt;你好啊&lt;/span&gt;&quot;</span>;<br><span class="hljs-keyword">const</span> innerDom= dom.<span class="hljs-title function_">insertBefore</span>(dom4, dom3);<span class="hljs-comment">//insertBefore(要被插入的dom，参考位置)向 dom 中的 dom3 之前，插入一个新的 dom ，返回该节点</span><br><br>dom.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&#x27;class&#x27;</span>,<span class="hljs-string">&#x27;white&#x27;</span>);<span class="hljs-comment">//给 dom 添加一个属性节点</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>删除节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> dom = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;p&#x27;</span>);<span class="hljs-comment">// 获取一个节点</span><br><span class="hljs-keyword">const</span> parent = dom.<span class="hljs-property">parentElement</span>;<span class="hljs-comment">// 取得父节点</span><br><span class="hljs-keyword">const</span> removed = parent.<span class="hljs-title function_">removeChild</span>(dom);<span class="hljs-comment">// 在父节点中删除节点，并返回删除的节点</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(removed === dom); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p>被删除的节点，在 DOM 树中被删了，此时还保存在内存中(所以会返回该节点)，如有需要，还可以添加到DOM树中</p>
+</li>
+</ul>
+<h3 id="事件模型"><a href="#事件模型" class="headerlink" title="事件模型"></a>事件模型</h3><ul>
+<li><p>事件与事件流</p>
+<p>Javascript中的事件，可以理解就是在HTML文档或者浏览器中发生的一种交互操作，使得网页具备互动性，常见的有加载事件，鼠标事件，自定义事件等。</p>
+<p>由于DOM是一个树结构，如果在父子节点绑定事件的时候，当触发子节点的时候，就存在一个顺序问题，这就涉及到事件流的概念</p>
+<p>事件流都会经历三个阶段:</p>
+<ol>
+<li>事件捕获阶段<br>事件捕获是一种从上往下的传播方式，事件最开始由不太具体的节点(被触发事件元素的最外层的节点)最早接受事件，开始向最具体的节点(被触发事件的元素)传播。</li>
+<li>处于目标阶段<br>到达最具体的节点(被触发事件的元素)</li>
+<li>事件冒泡阶段<br>事件冒泡是一种从下往上的传播方式，由最具体的元素(被触发事件的元素)然后逐渐向上传播到最不具体的那个节点(被触发事件元素的最外层的节点)，也就是DOM中最高层的父节点。</li>
+</ol>
+</li>
+<li><p>事件模型</p>
+<p>事件模型可以分为三种：原始事件模型、标准事件模型、IE事件模型（基本见不到了）</p>
+<ul>
+<li><p>原始事件模型（DOM0级）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt; !-- 标签直接绑定 -- &gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;button&#x27;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;btn&#x27;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&#x27;fun()&#x27;</span> /&gt;</span></span><br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-comment">// js 绑定</span></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">var</span> btn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;btn&#x27;</span>)</span></span><br><span class="language-javascript"><span class="language-xml">	btn.<span class="hljs-property">onclick</span> = fun;</span></span><br><span class="language-javascript"><span class="language-xml">	</span></span><br><span class="language-javascript"><span class="language-xml">	<span class="hljs-comment">// 删除绑定</span></span></span><br><span class="language-javascript"><span class="language-xml">	btn.<span class="hljs-property">onclick</span> = <span class="hljs-literal">null</span>;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ol>
+<li>绑定速度快</li>
+<li>只支持冒泡，不支持捕获</li>
+<li>同一类型的事件只能绑定一次</li>
+</ol>
+</li>
+<li><p>标准事件模型（DOM2级）</p>
+<p><code>addEvenListener(eventType,handler,userCapture)</code></p>
+<ol>
+<li>eventType：指定事件类型，如”click”</li>
+<li>handler：事件处理函数</li>
+<li>userCapture：boolean，默认为fasle，设置传递的类型，默认值是false，即冒泡传递；当值为true即为捕获传递</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> btn= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;.btn&#x27;</span>);<br><span class="hljs-comment">// 绑定(监听)一个事件</span><br>btn.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>,showMessage, <span class="hljs-literal">false</span>);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">showMessage</span>(<span class="hljs-params">event</span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event); <span class="hljs-comment">//event 默认实参，事件对象</span><br>&#125;<br><br><span class="hljs-comment">// 可以在一个D0M元素上绑定多个事件处理器，且各自并不会冲突</span><br>btn.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>,showessage2,<span class="hljs-literal">false</span>);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">showMessage2</span>(<span class="hljs-params">event</span>)&#123;&#125;<br><span class="hljs-comment">// 移除绑定(监听)</span><br>btn.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>,showMessage, <span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ol>
+<li>可以指定触发事件的时机</li>
+<li>同一个事件可以多次绑定</li>
+</ol>
+</li>
+<li><p>IE事件基本模型（基本不用）</p>
+<p>绑定方法：<code>attachEvent(eventType,handler)</code></p>
+<p>移出方法：<code>detachEvent(eventType,handler)</code></p>
+<p>特点：只冒泡不捕获</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p>利用事件模型的三个阶段中的冒泡阶段，将一个元素委托到另一个元素（一般是将一个元素的事件，向上委托到父级及以上的元素</p>
+</blockquote>
+</li>
+<li><p>应用场景</p>
+<ol>
+<li><p>线性图标点击</p>
+<p>有时用了线性图标且绑定了点击事件，可能出现点不中的情况，这时给图标外层加一个标签，再把事件绑定到外层标签上就能解决</p>
+</li>
+<li><p>所有子标签都绑定了同一事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;ul&gt;<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br>	<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br>	<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br>	...<br>&lt;/ul&gt;<br><br><span class="hljs-comment">//给每一个子标签都绑定一个点击事件</span><br><span class="hljs-keyword">const</span> lis = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementByTagName</span>(<span class="hljs-string">&#x27;li&#x27;</span>)<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">of</span> lis)&#123;<br>    <span class="hljs-keyword">let</span>.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e.<span class="hljs-property">target</span>.<span class="hljs-property">innerHTML</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//将点击事件绑定到父元素上</span><br><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;ul&#x27;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-keyword">if</span>(e.<span class="hljs-property">target</span>.<span class="hljs-property">nodeName</span> == <span class="hljs-string">&#x27;li&#x27;</span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e.<span class="hljs-property">target</span>.<span class="hljs-property">innerHTML</span>)<br>	&#125;<br>&#125;)<br><br><br></code></pre></td></tr></table></figure>
+
+<p>优点</p>
+<ol>
+<li>简化代码</li>
+<li>多个子元素绑定同一事件下，可以大大节约内存</li>
+<li>可以解决动态添加子元素，且绑定同一事件</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h3><ul>
+<li><p>概念</p>
+<blockquote>
+<p>当栈内存的作用域形成时，JS代码执行会有一个预编译的除段。这个阶段，JS首先会检查有没有语法错误。然后将<strong>带有 var 关键字的变量</strong>与<strong>函数</strong>提到最前面做<strong>声明</strong>，这个过程称为变量提升。</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//undefined</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">123</span>;<br><br><span class="hljs-title function_">fn</span>();<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123</span>); <span class="hljs-comment">//123</span><br>&#125;<br><br><span class="hljs-title function_">fn2</span>(); <span class="hljs-comment">//报错</span><br><span class="hljs-keyword">var</span> <span class="hljs-title function_">fn2</span>() = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>变量提升的过程</p>
+<ol>
+<li><p>将函数与var声明放置在最前面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123</span>);<br>&#125;<br><span class="hljs-keyword">var</span> a = <span class="hljs-literal">undefined</span>;<br><span class="hljs-keyword">var</span> fn2 = <span class="hljs-literal">undefined</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>从上到下执行（赋值是执行的一部分）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123</span>);<br>&#125;<br><span class="hljs-keyword">var</span> a = <span class="hljs-literal">undefined</span>;<br><span class="hljs-keyword">var</span> fn2 = <span class="hljs-literal">undefined</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//undefined</span><br>a = <span class="hljs-number">123</span>;<br><span class="hljs-title function_">fn</span>(); <span class="hljs-comment">//123</span><br><span class="hljs-title function_">fn2</span>(); <span class="hljs-comment">//报错</span><br><span class="hljs-title function_">fn2</span>() = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123</span>)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>var的作用</p>
+<ul>
+<li><p>var关键字是在当前作用域内声明了一个变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//undefined</span><br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//2</span><br>&#125;<br><span class="hljs-title function_">fn</span>();<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//10</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn2</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//10</span><br>&#125;<br><span class="hljs-title function_">fn2</span>();<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>块级作用域中，var声明的变量都会提升</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//undefined</span><br><span class="hljs-keyword">if</span>(ture)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a) <span class="hljs-comment">//1</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i) <span class="hljs-comment">//undefined</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;i &lt; <span class="hljs-number">3</span>;i++)&#123;&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i); <span class="hljs-comment">//3</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>关于let和const</p>
+<p>let与const关键字声明都不会被提升</p>
+</li>
+<li><p>关于不带任何关键字声明的变量</p>
+<p>不带任何关键字声明而直接赋值的变量，在非严格模式下会把变量绑定到全局作用域中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//1</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>	a = <span class="hljs-number">1</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//1</span><br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a)<span class="hljs-comment">//1</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
+<li><p>概念</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>    &#125;<br>&#125;<br><span class="hljs-keyword">const</span> fun = <span class="hljs-title function_">fn</span>();<br><span class="hljs-title function_">fun</span>();<span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>概念一：闭包(closure)是指包含了一组相关联的数据和函数的引用，这些数据和函数共同形成一个封闭的环境。</li>
+<li>概念二：一个函数和对其周围状态(词法环境)的引用捆绑在一起(或者是说函数被引用包围)这样的组合就是闭包。</li>
+<li>概念三：一个函数可以引用到另一个函数的作用域，就是闭包。</li>
+</ul>
+</li>
+<li><p>特点</p>
+</li>
+</ul>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><ul>
+<li>概念</li>
+</ul>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><ul>
+<li>Callback</li>
+</ul>
+
                 
               </div>
             
