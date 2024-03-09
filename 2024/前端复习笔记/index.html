@@ -23,8 +23,8 @@
 <meta property="og:site_name" content="Lxc&#39;s Blog">
 <meta property="og:description" content="HTML与CSSHTML标签类型 块级元素 block div ul ol li p from table tr h1-h6 可设置宽高 独占一行 margin和padding都生效   内联元素 inline span a b i em strong 不可设置宽高 不会独占一行 margin和padding的top和bottom都不生效   内联块级元素 input select textare">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-08T13:12:58.000Z">
-<meta property="article:modified_time" content="2024-03-09T12:34:43.285Z">
+<meta property="article:published_time" content="2024-03-06T13:12:58.000Z">
+<meta property="article:modified_time" content="2024-03-09T14:46:32.992Z">
 <meta property="article:author" content="WangshuXC">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -236,8 +236,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-08 21:12" pubdate>
-          2024年3月8日 晚上
+        <time datetime="2024-03-06 21:12" pubdate>
+          2024年3月6日 晚上
         </time>
       </span>
     
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.9k 字
+          10k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          66 分钟
+          85 分钟
         
       </span>
     
@@ -1078,8 +1078,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//1</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>	a = <span class="hljs-number">1</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<span class="hljs-comment">//1</span><br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a)<span class="hljs-comment">//1</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-</ul>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
+<li><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
 <li><p>概念</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>    &#125;<br>&#125;<br><span class="hljs-keyword">const</span> fun = <span class="hljs-title function_">fn</span>();<br><span class="hljs-title function_">fun</span>();<span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
 
@@ -1090,13 +1089,128 @@
 </ul>
 </li>
 <li><p>特点</p>
+<blockquote>
+<p>一般函数的词法环境（可以看成是执行上下文或干脆是作用域）在函数返回后就会被销毁。但闭包会保存对创建时所在词法环境的引用，即便在创建时所在的执行上下文被销毁了，但创建时所在的词法环境还存在，所以可以延长变量的生命周期。</p>
+</blockquote>
+</li>
+<li><p>应用场景</p>
+<p>延长变量的生命周期，创建私有变量，创建函数工厂</p>
+<ul>
+<li><p>延长变量的生命周期</p>
+<p>闭包可以使得函数内部的变量在函数执行完毕后仍然保持存活，可以在后续的操作中继续使用。</p>
+</li>
+<li><p>创建私有变量</p>
+<p>通过闭包可以创建私有变量，只能通过暴露的接口访问和修改，实现了数据的封装和隐藏。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createPrivateVariable</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> privateVar =<span class="hljs-string">&quot;这是一个私有变量&quot;</span>;<span class="hljs-comment">// 定义一个私有变量</span><br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPrivateVariable</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> privateVar; <span class="hljs-comment">//返回私有变量的值</span><br>    &#125;<br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">setPrivateVariable</span>(<span class="hljs-params">value</span>)&#123;<br>        privateVar = value;<span class="hljs-comment">//设置私有变量的值</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-attr">getValue</span>: getPrivateVariable，<span class="hljs-comment">// 公开获取私有变量的函数</span><br>        <span class="hljs-attr">setValue</span>:setPrivateVariable <span class="hljs-comment">// 公开设置私有变量的函数</span><br>    &#125;；<br>&#125;<br><br><span class="hljs-keyword">var</span> myObject = <span class="hljs-title function_">createPrivateVariable</span>();<span class="hljs-comment">// 调用函数并将结果赋值给my0bject对象</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(my0bject.<span class="hljs-property">privateVar</span>);<span class="hljs-comment">// undefined privateVar是私有变量所以无法直接访问</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myObject.<span class="hljs-title function_">getValue</span>());<span class="hljs-comment">//输出:&quot;这是一个私有变量</span><br>myObject.<span class="hljs-title function_">setValue</span>(<span class="hljs-string">&quot;新的私有变量&quot;</span>);<span class="hljs-comment">// 修改私有变量的值</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(my0bject.<span class="hljs-title function_">getValue</span>());<span class="hljs-comment">//输出:&quot;新的私有变量”</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建函数工厂</p>
+<p>通过闭包可以动态生成函数，每个函数都有自己独立的作用域和状态。</p>
 </li>
 </ul>
+</li>
+<li><p>销毁闭包</p>
+<p>由于闭包的特性，一旦被创建，它所在的词法环境（执行上下文、作用域、变量）不会被JS自动回收。增大了内存的损耗，甚至会发生内存溢出。所以在开发中，非必须情况下，尽量不要去用闭包。在闭包使用完成后，手动去销毁。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>    &#125;<br>&#125;<br><span class="hljs-keyword">const</span> fun = <span class="hljs-title function_">fn</span>();<br><span class="hljs-title function_">fun</span>();<span class="hljs-comment">// 1</span><br>fun = <span class="hljs-literal">null</span>;<span class="hljs-comment">//销毁</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>错误使用闭包的案例</p>
+<p>在构造函数中使用闭包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Obj</span>(<span class="hljs-params">name</span>)&#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>应该用在原型中添加方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Obj</span>(<span class="hljs-params">name</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>&#125;<br><span class="hljs-title class_">Obj</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
 <h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><ul>
-<li>概念</li>
+<li><p>概念</p>
+<p>JS是单线程的，这意味着在JS中同一事件只能做一件事情</p>
+</li>
+</ul>
+<blockquote>
+<p>当我们的代码由上到下，罗列了很多事情时，对于<strong>单线程语言</strong>来说有两种处理方式：</p>
+<ol>
+<li>等待上一件事情做完，再来做下一件事情。这种情况我们称为阻塞，以 php 为代表;</li>
+<li>上一件事情如果是一种特定的需要等待一定时间完成的事情，先把放到一个待执行的队列中，然后跳过，执行下一件事情。当所有可以做的事情都完成后，再从待执行队列中取出未完成的事情，再次执行。这种情况我们称为<strong>事件循环</strong>，以js为代表</li>
+</ol>
+</blockquote>
+<p>在事件循环的概念中，我们了解到有一个待执行的队列，我们称为事件队列。事件队列需要保存在一个地方，执行完一个，销毁一个，这个地方我们称为执行栈。</p>
+<ul>
+<li><p>JS的任务分类</p>
+<p>在事件循环的概念中，我们了解到并不是所有耗时的事情都会进入事件循环，有一些事情是必须要先执行完成的，比方说 for 循环，即使再耗时也是需要先执行完成的。而JS就通过任务分类来划分先后</p>
+<ul>
+<li>同步任务<br>比如 var 声明了一个变量、比如 for 循环，这些任务会直接进入主线程执行，我们称为同步任务</li>
+<li>异步任务<br>比如 ajax 的网络请求，setTimeout 的定时执行，就是异步任务。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>)<span class="hljs-comment">// 同步任务</span><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=&gt;</span>&#123; <span class="hljs-comment">// 异步任务</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>)<br>&#125;，<span class="hljs-number">0</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>) <span class="hljs-comment">// 同步任务</span><br><br><span class="hljs-comment">// out：1,3,4</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>宏任务和微任务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 宏任务与微任务示例</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// 同步任务</span><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=&gt;</span> &#123; <span class="hljs-comment">// 异步任务</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>&#125;，<span class="hljs-number">0</span>)<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>((resolve)=&#123; <span class="hljs-comment">//同步任务</span><br>	<span class="hljs-title function_">resolve</span>();<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>);<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">()=&gt;</span>&#123; <span class="hljs-comment">// 异步任务</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">4</span>);<br>&#125;)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">//同步任务</span><br></code></pre></td></tr></table></figure>
+
+<p>从上面示例中，我们看到五个任务中，有两个是异步任务，三个同步任务。</p>
+<p>在第一次事件循环中，异步任务会放入任务队列（执行栈）中。第二次事件循环时，也是由上到下(执行栈先进先出原则)去执行，结果应该为：<code>1, 3, 5, 2, 4</code></p>
+<p>但事实结果为：<code>1, 3, 5, 4, 2</code>，这就引出了一个概念：<strong>JS中异步任务又分为宏任务和微任务</strong></p>
+<ul>
+<li>宏任务：SetTimeout、setInterval等</li>
+<li>微任务：promise、async等</li>
+</ul>
+<p>为了便于记忆，<strong>微任务</strong>可以视为同步任务的尾巴，当一个同步任务执行得差不多了，就要执行”收尾“，再往下执行</p>
+</li>
 </ul>
 <h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><ul>
-<li>Callback</li>
+<li><p>用处</p>
+<p>JavaScript 中会用到异步操作的情况有很多，主要包括以下几个方面：</p>
+<blockquote>
+<ol>
+<li>网络请求：当需要通过 AJAX、Fetch 或其他方式向服务器请求数据时，由于网络请求是一个耗时的操作，为了避免阻塞页面，通常会使用异步操作来发送请求并在数据返回后处理响应。</li>
+<li>定时任务：例如使用 <code>setTimeout</code> 或 <code>setInterval</code> 来执行一些需要延迟或定时执行的操作，这些操作是异步的，不会阻塞主线程的执行。</li>
+<li>事件处理：页面中的用户交互和事件处理也是典型的异步操作。比如点击按钮、鼠标移动、键盘输入等事件都是异步触发的，需要通过事件监听器进行处理。</li>
+<li>文件操作：读取文件、写入文件或上传文件等操作通常也是异步的，因为这些操作需要涉及文件系统或网络，可能会花费较长时间。</li>
+<li>动画效果：实现页面动画效果通常也需要使用异步操作，比如使用 CSS 动画、JavaScript 动画库或者 Web Animation API。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>JS到ES6之后，处理异步任务一共经历过四个阶段，可以称之为JS异步四部曲</p>
+<ul>
+<li><p>Callback</p>
+<p>早先我们将一个闭包作为参数传给函数，待函数处理完该做的事情后，再执行这个闭包方法，来处理异步任务。这种就称之为<strong>回调</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getData</span>(<span class="hljs-params">callback,n</span>)&#123;<br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=&gt;</span>&#123;<br>        <span class="hljs-title function_">callback</span>(n+<span class="hljs-number">1</span>)<br>    &#125;,<span class="hljs-number">1000</span>)<br>&#125;<br><br><span class="hljs-title function_">getDate</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(r);<br>&#125;，<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>但是遇到一个令人头大的问题，如果一个逻辑里有多个连续的异步任务执行，就会出现如下问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">getDate</span>(<span class="hljs-function">(<span class="hljs-params">d1</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d1);<br>    <span class="hljs-title function_">getDate</span>(<span class="hljs-function">(<span class="hljs-params">d2</span>) =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d2);<br>        <span class="hljs-title function_">getDate</span>(<span class="hljs-function">(<span class="hljs-params">d3</span>) =&gt;</span> &#123;<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d3);<br>        &#125;，d2)<br>    &#125;，d1)<br>&#125;，<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这个现象就称之为<strong>回调地狱</strong></p>
+</li>
+<li><p>Promise</p>
+<p>promise是ES6提供的异步处理方法，解决了回调地狱的问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getData</span>(<span class="hljs-params">n</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>)=&gt;</span> &#123;<br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=&gt;</span> &#123;<br>            <span class="hljs-keyword">if</span>(n &gt;= <span class="hljs-number">2</span>)&#123;<br>                <span class="hljs-title function_">reject</span>(<span class="hljs-string">&#x27;这是一个错误&#x27;</span>)<br>                <span class="hljs-keyword">return</span><br>            &#125;<br>            <span class="hljs-title function_">resolve</span>(n + <span class="hljs-number">1</span>)<br>        &#125;，<span class="hljs-number">1000</span>)<br>    &#125;)<br>&#125;<br><br><span class="hljs-title function_">getData</span>(<span class="hljs-number">1</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">d1</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d1);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">getData</span>(d1);<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">d2</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d2);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">getData</span>(d2);<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">d3</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d3);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">getData</span>(d3);<br>&#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e);<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>promise的then方法的链式调用，使得代码清晰了很多</p>
+<ul>
+<li><p>then方法用来处理resolve（执行成功）的返回值</p>
+</li>
+<li><p>catch方法用来处理reject（执行失败）的返回值</p>
+</li>
+<li><p>promise对象的all与race方法用来处理promise对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resovle</span> =&gt;</span> <span class="hljs-title function_">resovle</span>(<span class="hljs-number">1</span>));<br><span class="hljs-keyword">const</span> p2 =<span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resovle</span> =&gt;</span> <span class="hljs-title function_">resovle</span>(<span class="hljs-number">2</span>));<br><span class="hljs-keyword">const</span> p3 =<span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resovle</span> =&gt;</span> <span class="hljs-title function_">resovle</span>(<span class="hljs-number">3</span>));<br><br><span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([p1,p2,p3]).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<span class="hljs-comment">//[1，2，3]</span><br>&#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e)<br>&#125;)<br><br><span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">race</span>([p1,p2,p3]).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<span class="hljs-comment">//1</span><br>&#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e)<br>&#125;)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>all 方法等待所有 promise 执行成功后，执行 then 方法，并返回一个数组，数组元素分别为各 promise.resovle 的结果。如果有一个失败，执行了 promise.reject，都会执行 catch 方法，来捕获错误。race方法只要有一个 promise 执行成功后，执行 then 方法，并返回这个 promise.resovle 的结果。对失败的处理与 all 方法相同。</p>
+</li>
+<li><p>generator</p>
+</li>
+<li><p>async&#x2F;await</p>
+<p>异步任务的完美处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getData</span>(<span class="hljs-params">n</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>)=&gt;</span> &#123;<br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">()=&gt;</span> &#123;<br>            <span class="hljs-keyword">if</span>(n &gt;= <span class="hljs-number">2</span>)&#123;<br>                <span class="hljs-title function_">reject</span>(<span class="hljs-string">&#x27;这是一个错误&#x27;</span>)<br>                <span class="hljs-keyword">return</span><br>            &#125;<br>            <span class="hljs-title function_">resolve</span>(n + <span class="hljs-number">1</span>)<br>        &#125;，<span class="hljs-number">1000</span>)<br>    &#125;)<br>&#125;<br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">fun</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>        <span class="hljs-keyword">const</span> d1 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getData</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d1);<br>        <br>        <span class="hljs-keyword">const</span> d2 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getData</span>(d1);<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d2);<br>        <br>        <span class="hljs-keyword">const</span> d3 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getData</span>(d2);<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(d3);<br>    &#125;<span class="hljs-keyword">catch</span>(e)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>有 async 修饰符的函数，声明为异步函数，返回值是promise对象；如果async关键字函数返回的不是promise，会自动用Promise.resolve()包装成promise对象；</p>
+</li>
+<li><p>await 只能运行在有 async 修饰符的函数中;</p>
+</li>
+<li><p>await 会阻塞函数的执行，直到后边的表达式运行完成。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
                 
@@ -1128,7 +1242,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月8日</div>
+          <div>2024年3月6日</div>
         </div>
       
       
